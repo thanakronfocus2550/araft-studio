@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  /* ปรับค่าพื้นฐานให้เป็นสีขาว-ดำตามสไตล์ Minimal */
+  --background: #ffffff;
+  --foreground: #111111;
+}
+
+/* เพิ่มส่วนนี้เพื่อให้เวลาคลิกปุ่มหรือเมนูแล้วหน้าเว็บจะค่อยๆ เลื่อน */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /* สถาปนิกมักใช้ Font ที่ดูสะอาดตา ถ้าคุณไม่ได้ลง Font พิเศษไว้ Arial ก็ถือว่าใช้ได้ครับ */
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ปรับแต่ง Scrollbar ให้ดูหรูขึ้น (สำหรับเบราว์เซอร์ Chrome/Safari) */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
