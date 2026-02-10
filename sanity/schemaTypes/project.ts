@@ -4,7 +4,6 @@ export default defineType({
   name: 'project',
   title: 'Project',
   type: 'document',
-  // แบ่งกลุ่มฟิลด์เป็นแท็บเพื่อให้หาที่ใส่รูปง่ายขึ้น
   groups: [
     { name: 'content', title: 'Content' },
     { name: 'media', title: 'Media' },
@@ -24,9 +23,9 @@ export default defineType({
       group: 'content',
       options: {
         list: [
-          { title: 'Residential', value: 'Residential' },
-          { title: 'Commercial', value: 'Commercial' },
+          { title: 'Exterior', value: 'Exterior' },
           { title: 'Interior', value: 'Interior' },
+          { title: 'Exhibition', value: 'Exhibition' },
         ],
       },
       validation: (Rule) => Rule.required(),
@@ -56,7 +55,6 @@ export default defineType({
       group: 'content',
     }),
     
-    // --- ย้ายรูปภาพมาไว้กลุ่ม Media ---
     defineField({ 
       name: 'image', 
       title: 'Main Image (รูปหน้าปก)', 
