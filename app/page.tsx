@@ -205,14 +205,18 @@ export default function Home() {
               <h3 className="text-6xl md:text-[8rem] font-extralight uppercase tracking-tighter">Portfolio</h3>
             </div>
             <div className="flex gap-8 md:gap-12 text-[12px] md:text-[14px] font-bold uppercase tracking-widest overflow-x-auto no-scrollbar pb-2">
-              {['All', 'Residential', 'Commercial', 'Interior'].map(cat => (
-                <button key={cat} onClick={() => setActiveCategory(cat)} className={`transition-all duration-500 relative pb-4 flex items-center gap-3 whitespace-nowrap ${activeCategory === cat ? 'text-black scale-105' : 'text-gray-300 hover:text-gray-500'}`}>
-                  {cat} <span className="text-[10px] opacity-40">({getCount(cat)})</span>
-                  {activeCategory === cat && <motion.div layoutId="portLine" className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-black" />}
-                </button>
-              ))}
-            </div>
-          </div>
+           {['All', 'Exterior', 'Interior', 'Exhibition'].map(cat => (
+           <button 
+            key={cat} 
+            onClick={() => setActiveCategory(cat)} 
+      className={`transition-all duration-500 relative pb-4 flex items-center gap-3 whitespace-nowrap ${activeCategory === cat ? 'text-black scale-105' : 'text-gray-300 hover:text-gray-500'}`}
+    >
+      {cat} <span className="text-[10px] opacity-40">({getCount(cat)})</span>
+      {activeCategory === cat && <motion.div layoutId="portLine" className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-black" />}
+    </button>
+  ))}
+</div>
+</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-32">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((p: any, index: number) => (
