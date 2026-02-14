@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, Variants, AnimatePresence } from 'framer-motion';
 import { MessageCircle, ArrowRight, X, Maximize2, Layout, Home as HomeIcon, Ruler, HardHat, Compass, ChevronLeft, ChevronRight } from 'lucide-react';
 import { client } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
 
 // --- Query ข้อมูล ---
 const PROJECTS_QUERY = `*[_type == "project"]{
@@ -25,7 +26,7 @@ const LocalNavbar = () => (
       <a href="#" className="hover:opacity-50 transition-opacity">Home</a>
       <a href="#about" className="hover:opacity-50 transition-opacity">About</a>
       <a href="#services" className="hover:opacity-50 transition-opacity">Services</a>
-      <a href="#portfolio" className="hover:opacity-50 transition-opacity">Portfolio</a>
+      <a href="#portfolio" className="hover:opacity-50 transition-opacity">Project</a>
       <a href="#contact" className="hover:opacity-50 transition-opacity">Contact</a>
     </div>
   </nav>
@@ -124,8 +125,13 @@ export default function Home() {
                     className="relative w-full h-full"
                   >
                     {projectImages[currentImgIndex] && (
-                      <Image src={projectImages[currentImgIndex]} alt="Gallery" fill className="object-cover" />
-                    )}
+  <Image 
+    src={urlFor(projectImages[currentImgIndex]).url()} 
+    alt="Gallery" 
+    fill 
+    className="object-cover" 
+  />
+)} 
                   </motion.div>
                 </AnimatePresence>
                 
@@ -202,7 +208,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-12 border-b border-gray-100 pb-12">
             <div className="space-y-4 text-left font-sans">
               <h2 className="text-[12px] tracking-[0.6em] uppercase text-gray-400 font-bold">Selected Archive</h2>
-              <h3 className="text-6xl md:text-[8rem] font-extralight uppercase tracking-tighter">Portfolio</h3>
+              <h3 className="text-6xl md:text-[8rem] font-extralight uppercase tracking-tighter">Project</h3>
             </div>
             <div className="flex gap-8 md:gap-12 text-[12px] md:text-[14px] font-bold uppercase tracking-widest overflow-x-auto no-scrollbar pb-2">
            {['All', 'Exterior', 'Interior', 'Exhibition'].map(cat => (
@@ -220,16 +226,46 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-32">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((p: any, index: number) => (
-                <motion.div key={p._id} layout initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: (index % 2) * 0.2 }} onClick={() => { setSelectedProject(p); setCurrentImgIndex(0); }} className="group cursor-pointer relative">
-                  <div className="relative aspect-[16/11] overflow-hidden bg-gray-100 mb-10 shadow-sm">
-                    {p.image && <Image src={p.image} alt={p.title} fill className="object-cover transition-transform duration-[1.5s] group-hover:scale-110" />}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"><Maximize2 size={24} className="text-white" /></div>
-                  </div>
-                  <div className="flex justify-between items-end border-l-2 border-gray-100 pl-8 group-hover:border-black transition-colors duration-700">
-                    <div className="space-y-4"><div className="space-y-1"><span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.4em] block">{p.category}</span><h4 className="text-4xl md:text-6xl font-extralight uppercase tracking-tight">{p.title}</h4></div><p className="text-sm text-gray-400 font-light italic">📍 {p.location || 'BANGKOK, TH'}</p></div>
-                    <ArrowRight size={32} strokeWidth={1} className="text-gray-200 group-hover:text-black transition-all" />
-                  </div>
-                </motion.div>
+               <motion.div 
+               key={p._id} 
+               layout 
+               initial={{ opacity: 0, y: 40 }} 
+               whileInView={{ opacity: 1, y: 0 }} 
+               transition={{ duration: 0.8, delay: (index % 2) * 0.2 }} 
+               onClick={() => { setSelectedProject(p); setCurrentImgIndex(0); }} 
+               className="group cursor-pointer relative"
+             >
+               <div className="relative aspect-[16/11] overflow-hidden bg-gray-100 mb-10 shadow-sm">
+                 {p.image && (
+                   <Image 
+                     src={urlFor(p.image).url()} 
+                     alt={p.title} 
+                     fill 
+                     className="object-cover transition-transform duration-[1.5s] group-hover:scale-110" 
+                   />
+                 )}
+                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                   <Maximize2 size={24} className="text-white" />
+                 </div>
+               </div>
+               
+               <div className="flex justify-between items-end border-l-2 border-gray-100 pl-8 group-hover:border-black transition-colors duration-700">
+                 <div className="space-y-4">
+                   <div className="space-y-1">
+                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.4em] block">
+                       {p.category}
+                     </span>
+                     <h4 className="text-4xl md:text-6xl font-extralight uppercase tracking-tight">
+                       {p.title}
+                     </h4>
+                   </div>
+                   <p className="text-sm text-gray-400 font-light italic">
+                     📍 {p.location || 'BANGKOK, TH'}
+                   </p>
+                 </div>
+                 <ArrowRight size={32} strokeWidth={1} className="text-gray-200 group-hover:text-black transition-all" />
+               </div>
+             </motion.div>
               ))}
             </AnimatePresence>
           </div>
